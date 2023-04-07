@@ -1,6 +1,5 @@
-
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 import MyCard from "./MyCard";
 
 const MyMain = () => {
@@ -11,11 +10,22 @@ const MyMain = () => {
     const [lat, setLat] = useState("");
     const [lon, setLon] = useState("");
 
-    
+    useEffect(() => {
+        let timer;
+        if (city !== "") {
+            timer = setTimeout(() => {
+                handleSubmit();
+            }, 3000);
+        }
 
-    const handleSubmit = async (event) => {
+        return () => {
+            clearTimeout(timer);
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [city]);
+
+    const handleSubmit = async () => {
         console.log(city);
-        event.preventDefault();
 
         try {
             const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${API_KEY}`);
@@ -32,18 +42,11 @@ const MyMain = () => {
 
     }
 
-    useEffect(() => {
-        if (city !== "") {
-            handleSubmit({ preventDefault: () => {} });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [city]);
-
     return (
         <Container>
             <Row className="justify-content-center">
                 <Col>
-                    <Form onSubmit={handleSubmit}>
+                    <Form>
                         <Form.Group className="mb-3" controlId="formBasicCityInput">
                             <Form.Label>City:</Form.Label>
                             <Form.Control
@@ -53,7 +56,6 @@ const MyMain = () => {
                                 value={city}
                                 onChange={(e) => setCity(e.target.value)}
                             />
-
                         </Form.Group>
                     </Form>
                 </Col>
