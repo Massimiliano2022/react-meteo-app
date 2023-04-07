@@ -9,6 +9,7 @@ const MyMain = () => {
     const [city, setCity] = useState("Torino");
     const [lat, setLat] = useState("");
     const [lon, setLon] = useState("");
+    const [localName, setLocalName] = useState("");
 
     useEffect(() => {
         let timer;
@@ -35,6 +36,7 @@ const MyMain = () => {
                 console.log("data : ", data);
                 setLat(data[0].lat);
                 setLon(data[0].lon);
+                setLocalName(data[0].local_names.it);
             }
         } catch (error) {
             console.log(error);
@@ -61,7 +63,7 @@ const MyMain = () => {
             </Row>
             <Row className="justify-content-center">
                 <Col>
-                    <MyWeather city={city} lat={lat} lon={lon} />
+                    <MyWeather city={city} lat={lat} lon={lon} localName={localName}/>
                 </Col>
             </Row>
         </Container >

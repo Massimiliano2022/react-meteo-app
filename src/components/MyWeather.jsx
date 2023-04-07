@@ -3,7 +3,7 @@ import { Card, Spinner } from "react-bootstrap";
 
 const MyWeather = (props) => {
 
-    const [weatherObj, setWeatherObj] = useState({});
+    const [weatherObj, setWeatherObj] = useState();
     const [loading, setLoading] = useState(true)
 
 
@@ -11,7 +11,10 @@ const MyWeather = (props) => {
 
     const fetchWeather = async () => {
         try {
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${props.lat}&lon=${props.lon}&appid=${API_KEY}`);
+
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${props.lat}&lon=${props.lon}&appid=${API_KEY}&units=metric`)
+
+            /*const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${props.lat}&lon=${props.lon}&appid=${API_KEY}`);*/
 
             if (response.ok) {
                 const data = await response.json();
@@ -25,23 +28,22 @@ const MyWeather = (props) => {
     };
 
     useEffect(() => {
-        if (props.lat) {
+        if (props.localName) {
             fetchWeather();
+            setLoading(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.lat]);
+    }, [props.localName]);
 
     return (
         <>
             {!loading ? (
                 <Card>
-                    <Card.Title>{weatherObj.name}</Card.Title>
                     <Card.Body>
-                        <Card.Title>Card Title</Card.Title>
-                        <Card.Text>
-                            Some quick example text to build on the card title and make up the
-                            bulk of the card's content.
-                        </Card.Text>
+                        <Card.Title>{props.localName}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">{weatherObj.city.country}</Card.Subtitle>
+                        <Card.Text>{weatherObj.list[0].main.temp}</Card.Text>
+                        <Card.Text>{weatherObj.list[0].weather[0].main}</Card.Text>
                     </Card.Body>
                 </Card>
             ) : (
