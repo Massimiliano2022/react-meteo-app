@@ -41,13 +41,14 @@ const MyWeather = (props) => {
                 <Card>
                     <Card.Body>
                         <Card.Title>{props.localName}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">{props.state}</Card.Subtitle>
                         <Card.Subtitle className="mb-2 text-muted">{weatherObj.city.country}</Card.Subtitle>
                         <Card.Text>{weatherObj.list[0].main.temp}</Card.Text>
                         <Card.Text>{weatherObj.list[0].weather[0].main}</Card.Text>
                     </Card.Body>
                 </Card>
             ) : (
-                <Spinner variant="primary" animation="grow" />
+                <Spinner variant="dark" animation="grow" />
             )}
 
         </>

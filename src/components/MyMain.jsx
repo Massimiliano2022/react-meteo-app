@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Form, InputGroup } from "react-bootstrap";
+import { Container, Row, Col, Form, InputGroup, Button } from "react-bootstrap";
 import MyWeather from "./MyWeather";
 
 const MyMain = () => {
@@ -10,6 +10,7 @@ const MyMain = () => {
     const [lat, setLat] = useState("");
     const [lon, setLon] = useState("");
     const [localName, setLocalName] = useState("");
+    const [state, setState] = useState("");
 
     useEffect(() => {
         let timer;
@@ -37,6 +38,7 @@ const MyMain = () => {
                 setLat(data[0].lat);
                 setLon(data[0].lon);
                 setLocalName(data[0].local_names.it);
+                setState(data[0].state);
             }
         } catch (error) {
             console.log(error);
@@ -45,7 +47,7 @@ const MyMain = () => {
     }
 
     return (
-        <Container>
+        <Container fluid className="vh-100" style={{backgroundColor:"grey"}}>
             <Row className="justify-content-center">
                 <Col>
                     <div className="my-3 input-group flex-nowrap">
@@ -57,13 +59,16 @@ const MyMain = () => {
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
                             />
-                         <InputGroup.Text>search</InputGroup.Text>
+                         {/*<InputGroup.Text variant="primary">search</InputGroup.Text>*/}
+                         <Button variant="dark" disabled>
+                            search
+                        </Button>{' '}
                     </div>
                 </Col>
             </Row>
             <Row className="justify-content-center">
                 <Col>
-                    <MyWeather city={city} lat={lat} lon={lon} localName={localName}/>
+                    <MyWeather city={city} lat={lat} lon={lon} localName={localName} state={state}/>
                 </Col>
             </Row>
         </Container >
