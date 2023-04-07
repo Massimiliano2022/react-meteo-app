@@ -53,9 +53,7 @@ const MyMain = () => {
                                 value={city}
                                 onChange={(e) => setCity(e.target.value)}
                             />
-                            {/*<Button variant="primary" type="submit" onClick={handleClick}>
-                            Submit
-                        </Button>*/}
+
                         </Form.Group>
                     </Form>
                 </Col>
