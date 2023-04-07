@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
-import MyCard from "./MyCard";
+import { Container, Row, Col, Form, InputGroup } from "react-bootstrap";
+import MyWeather from "./MyWeather";
 
 const MyMain = () => {
 
     const API_KEY = 'a20826c61fc45f9c046856bf342d2c5b';
 
-    const [city, setCity] = useState("");
+    const [city, setCity] = useState("Torino");
     const [lat, setLat] = useState("");
     const [lon, setLon] = useState("");
 
@@ -21,7 +21,7 @@ const MyMain = () => {
         return () => {
             clearTimeout(timer);
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [city]);
 
     const handleSubmit = async () => {
@@ -46,23 +46,22 @@ const MyMain = () => {
         <Container>
             <Row className="justify-content-center">
                 <Col>
-                    <Form>
-                        <Form.Group className="mb-3" controlId="formBasicCityInput">
-                            <Form.Label>City:</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="city"
-                                placeholder="Insert city..."
-                                value={city}
-                                onChange={(e) => setCity(e.target.value)}
+                    <div className="my-3 input-group flex-nowrap">
+                        <Form.Control 
+                            aria-label="search" 
+                            type="text"
+                            name="city"
+                            placeholder="Insert city..."
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
                             />
-                        </Form.Group>
-                    </Form>
+                         <InputGroup.Text>search</InputGroup.Text>
+                    </div>
                 </Col>
             </Row>
             <Row className="justify-content-center">
                 <Col>
-                    <MyCard lat={lat} lon={lon} />
+                    <MyWeather city={city} lat={lat} lon={lon} />
                 </Col>
             </Row>
         </Container >

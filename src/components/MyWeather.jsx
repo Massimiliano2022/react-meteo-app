@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Card, Spinner } from "react-bootstrap";
 
-const MyCard = (props) => {
+const MyWeather = (props) => {
 
     const [weatherObj, setWeatherObj] = useState({});
+    const [loading, setLoading] = useState(true)
+
 
     const API_KEY = 'a20826c61fc45f9c046856bf342d2c5b';
 
@@ -15,6 +17,7 @@ const MyCard = (props) => {
                 const data = await response.json();
                 console.log("data : ", data);
                 setWeatherObj(data);
+                setLoading(false);
             }
         } catch (error) {
             console.log(error);
@@ -22,7 +25,7 @@ const MyCard = (props) => {
     };
 
     useEffect(() => {
-        if(props.lat){
+        if (props.lat) {
             fetchWeather();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -30,21 +33,22 @@ const MyCard = (props) => {
 
     return (
         <>
-            {weatherObj ? (
+            {!loading ? (
                 <Card>
-                <Card.Img variant="top" src="holder.js/100px180" />
-                <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
+                    <Card.Title>{weatherObj.name}</Card.Title>
+                    <Card.Body>
+                        <Card.Title>Card Title</Card.Title>
+                        <Card.Text>
+                            Some quick example text to build on the card title and make up the
+                            bulk of the card's content.
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
             ) : (
-                <Spinner variant="success" animation="grow" />
+                <Spinner variant="primary" animation="grow" />
             )}
+
         </>
     );
 }
-export default MyCard;
+export default MyWeather;
