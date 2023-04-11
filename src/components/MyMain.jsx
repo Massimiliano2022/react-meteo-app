@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import MyWeather from "./MyWeather";
+import { Container } from "react-bootstrap";
+import MyCurrentWeather from "./MyCurrentWeather";
+import MySearchBar from "./MySearchBar";
+
 
 const MyMain = () => {
 
@@ -34,7 +36,7 @@ const MyMain = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log("data : ", data);
+                /*console.log("data : ", data);*/
                 setLat(data[0].lat);
                 setLon(data[0].lon);
                 setLocalName(data[0].local_names.it);
@@ -47,30 +49,21 @@ const MyMain = () => {
     }
 
     return (
-        <Container fluid className="vh-100" style={{backgroundColor:"grey"}}>
-            <Row className="justify-content-center">
-                <Col>
-                    <div className="my-3 input-group flex-nowrap">
-                        <Form.Control 
-                            aria-label="search" 
-                            type="text"
-                            name="city"
-                            placeholder="Insert city..."
-                            value={city}
-                            onChange={(e) => setCity(e.target.value)}
-                            />
-                         {/*<InputGroup.Text variant="primary">search</InputGroup.Text>*/}
-                         <Button variant="dark" disabled>
-                            search
-                        </Button>{' '}
-                    </div>
+        <Container fluid className="vh-100" style={{backgroundColor:"black"}}>
+            <MySearchBar city={city} setCity={setCity}/>
+            <MyCurrentWeather city={city} lat={lat} lon={lon} localName={localName} state={state}/>
+               
+            {/*<Row>
+                <Col sm={4}>
+                    <MyWeekWeather />
                 </Col>
-            </Row>
-            <Row className="justify-content-center">
-                <Col>
-                    <MyWeather city={city} lat={lat} lon={lon} localName={localName} state={state}/>
+                <Col sm={4}>
+                    <MyWeekWeather />
                 </Col>
-            </Row>
+                <Col sm={4}>
+                    <MyWeekWeather />
+                </Col>
+            </Row>*/}
         </Container >
     );
 };
