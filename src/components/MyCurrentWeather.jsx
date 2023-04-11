@@ -8,6 +8,12 @@ const MyCurrentWeather = (props) => {
     const [loading, setLoading] = useState(true)
 
 
+    /*const getDateFromMs = (dateMs) => {
+        const date = new Date(dateMs * 1000);
+        console.log(date);
+        return date;
+    }*/
+
     const API_KEY = 'a20826c61fc45f9c046856bf342d2c5b';
 
     const fetchWeather = async () => {
@@ -19,7 +25,7 @@ const MyCurrentWeather = (props) => {
 
             if (response.ok) {
                 const data = await response.json();
-                /*console.log("data : ", data);*/
+                console.log("data : ", data);
                 setWeatherObj(data);
                 setLoading(false);
             }
